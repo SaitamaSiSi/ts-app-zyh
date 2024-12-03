@@ -47,9 +47,20 @@ export default {
     async function Login() {
       // MyTest()
 
-      uni.switchTab({
-        url: '/pages/homeMain/index'
-      })
+      if (userId.value === 'vben' && userPwd.value === '123456') {
+        uni.switchTab({
+          url: '/pages/newHome/index'
+        })
+        uni.showToast({
+          title: '登录成功',
+          icon: 'success'
+        })
+      } else {
+        uni.showModal({
+          title: '登录失败',
+          content: '用户名或密码错误',
+        });
+      }
 
       // uni.showLoading({
       //   title: '登陆中'

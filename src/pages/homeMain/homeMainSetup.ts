@@ -6,6 +6,7 @@ import {
     onBeforeUnmount,
     onUnmounted
 } from "vue";
+import { onReachBottom } from '@dcloudio/uni-app';
 
 export function homeMainSetup() {
     //通过组合式API的形式去使用生命周期
@@ -26,6 +27,9 @@ export function homeMainSetup() {
     });
     onUnmounted(() => {
         console.log("onUnmounted");
+    });
+    onReachBottom(() => {
+        console.log("onReachBottom");
     });
 
     return {

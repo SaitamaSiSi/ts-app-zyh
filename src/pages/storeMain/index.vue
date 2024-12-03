@@ -1,8 +1,6 @@
 <script>
-import {
-  ref,
-} from "vue";
-import { storeMainSetup } from "./storeMainSetup.ts";
+import { ref, nextTick } from "vue";
+import { onShow } from '@dcloudio/uni-app';
 
 export default {
   name: "store",
@@ -10,14 +8,24 @@ export default {
     var editBtnText = ref("编辑");
     var products = ref([]);
 
+    onShow(() => {
+      products.value = []
+      products.value = getApp().globalData?.shopingCart
+      // products.value = getApp().globalData?.shopingCart.map(item => ({
+      //   ...item,
+      //   checked: false,
+      //   num: 1,
+      // }));
+    });
+
     function EditClick() {
       editBtnText.value = editBtnText.value === "编辑" ? "完成" : "编辑";
     }
 
     function StoreClick(item) {
       uni.showModal({
-        title: '跳转店家页面',
-        content: `【${item.store}】店铺`,
+        title: '跳转商品页面',
+        content: `${item.name}`,
         showCancel: false
       })
     }
@@ -40,6 +48,7 @@ export default {
         icon: 'success'
       })
       products.value = []
+      getApp().globalData.shopingCart = []
     }
 
     function deleteClick() {
@@ -55,6 +64,7 @@ export default {
         showCancel: false
       })
       products.value = products.value.filter(item => !checkedIds.includes(item.id))
+      getApp().globalData.shopingCart = getApp().globalData.shopingCart.filter(item => !checkedIds.includes(item.id))
     }
 
     function buyClick() {
@@ -62,17 +72,6 @@ export default {
         title: '购买',
         icon: 'success'
       })
-      for (var i = 0; i < 30; i++) {
-        products.value.push({
-          id: i,
-          checked: false,
-          store: '商家' + i,
-          name: "商品" + i,
-          type: '款式' + i,
-          price: "单价" + i,
-          num: '数量' + i
-        })
-      }
     }
 
     return {
@@ -85,7 +84,6 @@ export default {
       clearClick,
       deleteClick,
       buyClick,
-      ...storeMainSetup()
     };
   },
 };
@@ -97,23 +95,23 @@ export default {
       <div style="flex-grow: 1;" />
       <button class="item-style" type="primary" @click="EditClick">{{ editBtnText }}</button>
     </view>
-    <view v-if="products.length === 0" style="height: calc(100% - 200rpx);display: flex;justify-content: space-between;align-items: center;text-align: center;">
+    <view v-if="products.length === 0"
+      style="height: calc(100% - 200rpx);display: flex;justify-content: space-between;align-items: center;text-align: center;">
       <text style="width:100%;font-size: 48rpx;">未添加商品</text>
     </view>
     <scroll-view v-else class="scroll-view-style" scroll-y="true">
       <view class="scroll-row-style" v-for="(item, index) in products" :key=index>
         <checkbox style="margin-left: 10rpx;" :checked="item.checked" @click="clickChange(item)" />
         <view style="display: flex;flex-direction: column;flex-grow: 1;margin-left: 10rpx;">
-          <text style="font-size: 28rpx;" @click="StoreClick(item)">{{ item.store }}</text>
+          <text style="font-size: 28rpx;" @click="StoreClick(item)">名称: {{ item.name }}</text>
           <view class="scroll-item-style">
-            <image class="btn-img" src="/static/setting.ico" @click="ProductClick(item)" />
+            <image class="btn-img" :src="item.url" @click="ProductClick(item)" />
             <view class="vertical-text" style="flex-grow: 1;margin-left: 20rpx;">
-              <text style="font-size: 24rpx;">{{ item.name }}</text>
-              <text style="font-size: 18rpx;">{{ item.type }}</text>
+              <text style="font-size: 18rpx;">类型: {{ item.type }}</text>
               <view style="display: flex;flex-direction: row;">
-                <text style="font-size: 18rpx;">{{ item.price }}</text>
+                <text style="font-size: 18rpx;">单价: {{ item.price }}</text>
                 <div style="flex-grow: 1;" />
-                <text style="font-size: 24rpx;margin-right: 100rpx;">{{ item.num }}</text>
+                <text style="font-size: 24rpx;margin-right: 100rpx;">数量: {{ item.num }}</text>
               </view>
             </view>
           </view>
@@ -131,9 +129,10 @@ export default {
 
 <style>
 .container {
-  width: 100%;
+  width: 90%;
   height: 100%;
-  background-color: gray;
+  margin: auto;
+  background-color: rgb(220, 220, 220);
 }
 
 .row-style {
@@ -160,6 +159,8 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 10rpx 20rpx;
+  background-color: white;
 }
 
 .scroll-item-style {

@@ -9,7 +9,7 @@ export default {
     async function ScanClick() {
       await wx.scanCode({
         onlyFromCamera: false,
-        success: function(res){
+        success: function (res) {
           // success
           console.log(`scanType:${res.scanType}`)
           console.log(`charSet:${res.charSet}`)
@@ -33,19 +33,19 @@ export default {
             })
           }
         },
-        fail: function() {
+        fail: function () {
           // fail
           uni.showToast({
-              title: 'fail',
-              icon: 'error'
-            })
+            title: 'fail',
+            icon: 'error'
+          })
         },
-        complete: function() {
+        complete: function () {
           // complete
           uni.showToast({
-              title: 'complete',
-              icon: 'error'
-            })
+            title: 'complete',
+            icon: 'error'
+          })
         }
       })
     }
