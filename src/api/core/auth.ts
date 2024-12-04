@@ -1,5 +1,5 @@
 import { requestClient } from '@/api/request';
-import { AuthApi}  from '@/api/type/AuthApi';
+import type { AuthApi}  from '@/api/type/AuthApi';
 
 /**
  * 登录

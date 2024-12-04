@@ -1,21 +1,19 @@
 <script>
-import { ref, nextTick } from "vue";
+import { ref, computed } from "vue";
 import { onShow } from '@dcloudio/uni-app';
+import { useStore } from "vuex";
 
 export default {
   name: "store",
   setup() {
     var editBtnText = ref("编辑");
     var products = ref([]);
+    const store = useStore();
 
     onShow(() => {
       products.value = []
-      products.value = getApp().globalData?.shopingCart
-      // products.value = getApp().globalData?.shopingCart.map(item => ({
-      //   ...item,
-      //   checked: false,
-      //   num: 1,
-      // }));
+      products.value = computed(() => store.getters['app/getShopingCart']).value;
+      console.log(products.value)
     });
 
     function EditClick() {
@@ -48,7 +46,7 @@ export default {
         icon: 'success'
       })
       products.value = []
-      getApp().globalData.shopingCart = []
+      store.dispatch('app/clearShopCart');
     }
 
     function deleteClick() {
@@ -64,7 +62,7 @@ export default {
         showCancel: false
       })
       products.value = products.value.filter(item => !checkedIds.includes(item.id))
-      getApp().globalData.shopingCart = getApp().globalData.shopingCart.filter(item => !checkedIds.includes(item.id))
+      store.dispatch('app/delShopCart', checkedIds);
     }
 
     function buyClick() {
@@ -75,6 +73,7 @@ export default {
     }
 
     return {
+      store,
       editBtnText,
       products,
       EditClick,

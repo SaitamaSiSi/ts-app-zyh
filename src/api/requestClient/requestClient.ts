@@ -1,4 +1,4 @@
-import { BaseRequestConfig, ZyhResponse } from '@/api/type/ZyhRequestConfig'
+import type { BaseRequestConfig, ZyhResponse } from '@/api/type/ZyhRequestConfig'
 
 class RequestClient {
     private option: BaseRequestConfig = {};

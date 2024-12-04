@@ -10,7 +10,9 @@ onHide(() => {
   console.log("App Hide");
 });
 </script>
-<script lang="ts">
+
+<!-- 可以通过getApp().globalData?.shopingCart获取参数 -->
+<!-- <script lang="ts">
 export default {
   globalData: {
     userInfo: {
@@ -21,11 +23,9 @@ export default {
     shopingCart: [],
   },
 };
-</script>
-<style lang="scss">
-@import './common/uni.scss';
-@import '@/uni_modules/uni-scss/index.scss';
+</script> -->
 
+<style lang="scss">
 page {
   background-color: #f5f5f5;
 }

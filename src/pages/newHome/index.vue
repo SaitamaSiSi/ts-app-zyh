@@ -5,6 +5,7 @@ import { onReachBottom } from '@dcloudio/uni-app';
 import CompSearch from '@/components/comp-search/comp-search.vue'
 import CompProductList from '@/components/comp-product-list/comp-product-list.vue'
 import CompLoading from '@/components/comp-loading/comp-loading.vue'
+import { useStore } from 'vuex'
 
 export default {
     name: "home",
@@ -20,6 +21,7 @@ export default {
         const priceOption = ref(['默认价格', '价格低序', '价格高序']);
         const productList = ref([]);
         const showLoading = ref(false);
+        const store = useStore();
 
         swiperProps.value = {
             showDot: true,
@@ -96,7 +98,7 @@ export default {
                 content: `名称:${product.name},价格:${product.price}`,
                 showCancel: false
             })
-            getApp().globalData?.shopingCart.push(product);
+            store.dispatch('app/addShopCart', product);
         }
 
         function loadingMoreProduct() {
@@ -144,6 +146,7 @@ export default {
         });
 
         return {
+            store,
             swiperProps,
             swiperItems,
             storeTypeIndex,

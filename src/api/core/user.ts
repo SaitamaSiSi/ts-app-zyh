@@ -1,6 +1,6 @@
 import { requestClient } from '@/api/request';
-import { AuthApi}  from '@/api/type/AuthApi';
-import { UserApi}  from '@/api/type/UserApi';
+import type { AuthApi }  from '@/api/type/AuthApi';
+import type { UserApi }  from '@/api/type/UserApi';
 
 /**
  * 用户信息

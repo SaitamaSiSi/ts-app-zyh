@@ -2,7 +2,7 @@
   <view class="content">
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
-      <uni-title type="h1" :title="title"></uni-title>
+      <uni-title type="h1" :title="store.state.app.appName"></uni-title>
     </view>
     <view class="text-area">
       <text class="title">{{ '用户名:' }}</text>
@@ -21,10 +21,9 @@
 <script>
 import { ref } from 'vue'
 import { AuthLoginApi } from '@/api/core/auth'
-import * as TestModels from '@/models/jsModels/EditBayonetSchedule'
-import {
-  HexDataStr
-} from '@/models/jsModels/Utilities'
+// import * as TestModels from '@/models/jsModels/EditBayonetSchedule'
+// import { HexDataStr } from '@/models/jsModels/Utilities'
+import { useStore } from 'vuex'
 
 export default {
   name: 'index-page',
@@ -34,15 +33,15 @@ export default {
     console.log('Login => ', options)
   },
   setup() {
-    const title = ref('欢迎使用');
     const userId = ref('vben');
     const userPwd = ref('123456');
+    const store = useStore();
 
-    function MyTest() {
-      var byteArray = new Uint8Array([255, 128, 0, 1])
-      var hexString = HexDataStr(byteArray, byteArray.length)
-      console.log(hexString)
-    }
+    // function MyTest() {
+    //   var byteArray = new Uint8Array([255, 128, 0, 1])
+    //   var hexString = HexDataStr(byteArray, byteArray.length)
+    //   console.log(hexString)
+    // }
 
     async function Login() {
       // MyTest()
@@ -97,6 +96,7 @@ export default {
     }
 
     return {
+      store,
       title,
       userId,
       userPwd,
