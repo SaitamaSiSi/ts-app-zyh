@@ -22,6 +22,11 @@ export default {
   },
 };
 </script>
-<style>
-@import './common/uni.css';
+<style lang="scss">
+@import './common/uni.scss';
+@import '@/uni_modules/uni-scss/index.scss';
+
+page {
+  background-color: #f5f5f5;
+}
 </style>

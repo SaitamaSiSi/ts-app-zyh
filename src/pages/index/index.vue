@@ -2,7 +2,7 @@
   <view class="content">
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
-      <text class="title">{{ title }}</text>
+      <uni-title type="h1" :title="title"></uni-title>
     </view>
     <view class="text-area">
       <text class="title">{{ '用户名:' }}</text>
