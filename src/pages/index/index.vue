@@ -48,7 +48,7 @@ export default {
 
       if (userId.value === 'vben' && userPwd.value === '123456') {
         uni.switchTab({
-          url: '/pages/newHome/index'
+          url: '/pages/home/index'
         })
         uni.showToast({
           title: '登录成功',
@@ -68,7 +68,7 @@ export default {
       // uni.hideLoading();
       // if (loginRes != null && loginRes.status === 1) {
       //   uni.switchTab({
-      //     url: '/pages/homeMain/index'
+      //     url: '/pages/home/index'
       //   })
       // } else {
       //   uni.showModal({
@@ -97,7 +97,6 @@ export default {
 
     return {
       store,
-      title,
       userId,
       userPwd,
       Login

@@ -1,5 +1,4 @@
 /* 需要放到文件最上面 */
-// @import '@/uni_modules/uni-scss/variables.scss';
 @use "sass:color";
 
 /*
@@ -61,4 +60,5 @@ $uni-shadow-lg:0px 1px 10px 2px rgba($color: #a5a4a4, $alpha: 0.5);
 
 // 蒙版
 $uni-mask: rgba($color: #000000, $alpha: 0.4);
+
 

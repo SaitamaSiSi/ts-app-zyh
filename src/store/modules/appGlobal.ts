@@ -42,7 +42,7 @@ const appGlobal: Module<AppGlobalState, { appGlobal: AppGlobalState }> = {
     /**
      * actions中一般是接口调用方法或者需要异步操作的函数方法
      * 第一个参数是调用方法，参数params是接口的入参
-     * 异步操作时通过dispatch调用
+     * 异步操作时通过dispatch调用 import { useStore } from "vuex"; const store = useStore(); store.dispatch("app/delShopCart", checkedIds);
      */
     SetUserInfo({ commit }, userInfo) {
       commit('SET_USER_INFO', userInfo);
@@ -62,7 +62,7 @@ const appGlobal: Module<AppGlobalState, { appGlobal: AppGlobalState }> = {
   },
   getters: {
     /**
-     * getters中的方法对state值进行计算，暂时用到的比较少
+     * getters中的方法对state值进行计算，暂时用到的比较少 import { computed } from "vue"; computed(() => store.getters["app/getShopingCart"]).value
      */
     doubleCount: (state: AppGlobalState) => state.appPrice * 2,
     getAppName: (state: AppGlobalState) => state.appName,

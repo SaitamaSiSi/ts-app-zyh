@@ -5,7 +5,6 @@ import { onReachBottom } from '@dcloudio/uni-app';
 import CompSearch from '@/components/comp-search/comp-search.vue'
 import CompProductList from '@/components/comp-product-list/comp-product-list.vue'
 import CompLoading from '@/components/comp-loading/comp-loading.vue'
-import { useStore } from 'vuex'
 
 export default {
     name: "home",
@@ -21,7 +20,6 @@ export default {
         const priceOption = ref(['默认价格', '价格低序', '价格高序']);
         const productList = ref([]);
         const showLoading = ref(false);
-        const store = useStore();
 
         swiperProps.value = {
             showDot: true,
@@ -98,7 +96,6 @@ export default {
                 content: `名称:${product.name},价格:${product.price}`,
                 showCancel: false
             })
-            store.dispatch('app/addShopCart', product);
         }
 
         function loadingMoreProduct() {
@@ -146,7 +143,6 @@ export default {
         });
 
         return {
-            store,
             swiperProps,
             swiperItems,
             storeTypeIndex,
@@ -186,18 +182,18 @@ export default {
             </view>
         </view>
         <view class="page-container">
-            <view class="uni-flex uni-row">
-                <view class="flex-item row-item">
+            <view class="row-style">
+                <view class="row-item">
                     <picker @change="storeTypeChange" :value="storeTypeIndex" :range="storeTypeOption">
                         <view class="uni-input">{{ storeTypeOption[storeTypeIndex] }}</view>
                     </picker>
                 </view>
-                <view class="flex-item row-item">
+                <view class="row-item">
                     <picker @change="productTypeChange" :value="productTypeIndex" :range="productTypeOption">
                         <view class="uni-input">{{ productTypeOption[productTypeIndex] }}</view>
                     </picker>
                 </view>
-                <view class="flex-item row-item">
+                <view class="row-item">
                     <picker @change="priceChange" :value="priceIndex" :range="priceOption">
                         <view class="uni-input">{{ priceOption[priceIndex] }}</view>
                     </picker>
@@ -212,6 +208,6 @@ export default {
     </view>
 </template>
 
-<style lang="scss">
-@import url('./newHome.css');
+<style scoped lang="scss">
+@import url('./home.scss');
 </style>
