@@ -1,0 +1,151 @@
+.goods-detail {
+    padding-bottom: 120rpx;
+
+    .title {
+        font-size: 64rpx;
+        margin-top: 32rpx;
+        margin-left: 20px;
+        color: #293539;
+        font-weight: 300;
+        position: relative;
+
+        text {
+            width: 7px;
+            height: 7px;
+            position: absolute;
+            border: 2px solid #a78845;
+            border-radius: 50%;
+        }
+    }
+
+    .title-sub {
+        margin-left: 25px;
+        color: #293539;
+        font-size: 36rpx;
+        margin-top: 16px;
+        font-weight: 300;
+    }
+
+    .amount {
+        text-align: center;
+        font-size: 68rpx;
+        color: #a78845;
+        margin: 64rpx 0;
+
+        text {
+            font-size: 48rpx;
+            padding-right: 3px;
+        }
+    }
+
+    .content {
+        margin-top: 32rpx;
+    }
+
+    .navigation {
+        position: fixed;
+        width: 100vw;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        margin-top: 100rpx;
+        border: solid 2rpx #f2f2f2;
+        background-color: #ffffff;
+        padding: 16rpx 0;
+
+        .left {
+            display: flex;
+            font-size: 20rpx;
+
+            .item {
+                margin: 0 30rpx;
+
+                &.car {
+                    text-align: center;
+                    position: relative;
+
+                    .car-num {
+                        position: absolute;
+                        top: -10rpx;
+                        right: -10rpx;
+                    }
+                }
+            }
+
+            .kf {
+                position: relative;
+
+                button {
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0;
+                    z-index: 99;
+                }
+            }
+        }
+
+        .right {
+            flex: 1;
+            padding-right: 16rpx;
+            display: flex;
+            font-size: 28rpx;
+            align-items: center;
+
+            .btn {
+                flex: 1;
+                text-align: center;
+                line-height: 66rpx;
+                padding: 0 30rpx;
+                border-radius: 36rpx;
+                color: #ffffff;
+            }
+
+            .cart {
+                background-color: #ed3f14;
+                margin-right: 30rpx;
+            }
+
+            .buy {
+                background-color: #ff7900;
+            }
+        }
+    }
+
+    .goodsShow {
+        .pic-amount {
+            display: flex;
+            align-items: center;
+
+            .amount {
+                margin-left: 64rpx;
+                font-size: 68rpx;
+                color: #a78845;
+
+                text {
+                    font-size: 48rpx;
+                    padding-right: 3px;
+                }
+            }
+        }
+
+        padding: 32rpx;
+
+        .tags {
+            margin-top: 32rpx;
+            padding-bottom: 48rpx;
+
+            .item {
+                margin: 8rpx 4rpx;
+            }
+
+            .hidden {
+                display: none;
+            }
+        }
+
+        .submit {
+            margin-top: 32rpx;
+        }
+    }
+}

@@ -30,7 +30,7 @@
 	},
 	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
@@ -66,6 +66,24 @@
 		    "path" : "pages/order/detail",
 		    "style": {
 				"navigationBarTitleText": "订单详情"
+		    }
+		},
+		{
+		    "path" : "pages/goods/details",
+		    "style": {
+				"navigationBarTitleText": "商品详情"
+		    }
+		},
+		{
+		    "path" : "pages/login/reg",
+		    "style": {
+				"navigationBarTitleText": "注册新用户"
+		    }
+		},
+		{
+		    "path" : "pages/login/resetpwd",
+		    "style": {
+				"navigationBarTitleText": "忘记密码找回"
 		    }
 		}
 	],

@@ -120,7 +120,7 @@ export default {
 .card-body-text {
     font-size: 24rpx;
     padding: 10rpx;
-    height: 90rpx;
+    height: 110rpx;
     overflow: hidden;
     word-break: break-all;
     /* break-all(允许在单词内换行。) */

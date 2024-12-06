@@ -16,7 +16,7 @@ export default {
         <view>
           <image class="avatar" :src="userDetail.avatarUrl" mode="aspectFill" />
         </view>
-        <view style="padding-left:16rpx; flex:1">
+        <view style="padding-left: 16rpx; flex: 1">
           <view>
             {{ userDetail.name }}
           </view>
@@ -25,7 +25,13 @@ export default {
           </view>
         </view>
         <view>
-          <image class="setting" style="padding-right:16rpx;" :src="'/static/setting.ico'" mode="aspectFill" @click="UserInfoClick" />
+          <image
+            class="setting"
+            style="padding-right: 16rpx"
+            :src="'/static/setting.ico'"
+            mode="aspectFill"
+            @click="UserInfoClick"
+          />
         </view>
       </view>
       <uni-grid :column="3">
@@ -50,16 +56,6 @@ export default {
       </uni-grid>
       <view>
         <uni-list :border="true">
-          <uni-list-item link :to="'/pages/index/index?key=collection'">
-            <template v-slot:header>
-              <uni-icons type="heart" :size="46" color="#a78845"></uni-icons>
-            </template>
-            <template v-slot:body>
-              <view class="slot-box">
-                <text class="slot-text">我的收藏</text>
-              </view>
-            </template>
-          </uni-list-item>
           <uni-list-item link :to="'/pages/index/index?key=address'">
             <template v-slot:header>
               <uni-icons type="map" :size="46" color="#a78845"></uni-icons>

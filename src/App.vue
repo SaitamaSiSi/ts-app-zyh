@@ -11,19 +11,19 @@ onHide(() => {
 });
 </script>
 
-<!-- 可以通过getApp().globalData?.shopingCart获取参数 -->
-<!-- <script lang="ts">
+<script lang="ts">
 export default {
   globalData: {
-    userInfo: {
-      id: '124',
-      name: '张三',
-      age: 18
-    },
-    shopingCart: [],
+    version: "1.0.0", // getApp().globalData.version
   },
+  methods: {
+    checkHasLogined() {
+      // getApp().checkHasLogined()
+      return true
+    }
+  }
 };
-</script> -->
+</script>
 
 <style lang="scss">
 @import "uview-plus/index.scss";
