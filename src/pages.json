@@ -85,6 +85,12 @@
 		    "style": {
 				"navigationBarTitleText": "忘记密码找回"
 		    }
+		},
+		{
+		    "path" : "pages/about/index",
+		    "style": {
+				"navigationBarTitleText": ""
+		    }
 		}
 	],
 	"globalStyle": {

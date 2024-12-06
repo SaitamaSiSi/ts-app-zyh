@@ -56,7 +56,7 @@ export default {
       </uni-grid>
       <view>
         <uni-list :border="true">
-          <uni-list-item link :to="'/pages/index/index?key=address'">
+          <uni-list-item link :to="'/pages/login/index?key=address'">
             <template v-slot:header>
               <uni-icons type="map" :size="46" color="#a78845"></uni-icons>
             </template>
@@ -66,7 +66,17 @@ export default {
               </view>
             </template>
           </uni-list-item>
-          <uni-list-item link :to="'/pages/index/index?key=aboutus'">
+          <uni-list-item link :to="'/pages/about/index?key=qrcode'">
+            <template v-slot:header>
+              <uni-icons type="locked" :size="46" color="#a78845"></uni-icons>
+            </template>
+            <template v-slot:body>
+              <view class="slot-box">
+                <text class="slot-text">二次验证码</text>
+              </view>
+            </template>
+          </uni-list-item>
+          <uni-list-item link :to="'/pages/about/index?key=aboutus'">
             <template v-slot:header>
               <uni-icons type="contact" :size="46" color="#a78845"></uni-icons>
             </template>
