@@ -1,7 +1,63 @@
 <template>
   <view>
-		<view class="wrap">
-		</view>
+    <view class="wrap">
+      <u-sticky>
+        <view class="u-tabs-box">
+          <u-tabs
+            activeColor="#f29100"
+            ref="tabs"
+            :list="list"
+            :current="current"
+            @change="change"
+            :is-scroll="false"
+            swiperWidth="750"
+          ></u-tabs>
+        </view>
+      </u-sticky>
+      <comp-page-box-empty
+        v-if="!orderList || orderList.length == 0"
+        title="您还没有相关的订单"
+        sub-title="可以去看看有那些想买的～"
+        :show-btn="true"
+      />
+      <view v-else class="page-box">
+        <view class="order" v-for="(item, index) in orderList" :key="item.id">
+          <view class="top" @click="godetail(item.id)">
+            <view class="left"> 订单号: {{ item.orderNumber }} </view>
+            <view class="right">{{ item.statusStr }}</view>
+          </view>
+          <view
+            class="item"
+            v-for="(item2, index2) in item.goodsList"
+            :key="item2.id"
+          >
+            <view class="left"
+              ><image :src="item2.pic" mode="aspectFill"></image
+            ></view>
+            <view class="content">
+              <view class="title u-line-2">{{ item2.goodsName }}</view>
+              <view v-if="item2.property" class="type">{{
+                item2.property
+              }}</view>
+            </view>
+            <view class="right">
+              <view class="price"> ￥{{ item2.amountSingle }} </view>
+              <view class="number">x{{ item2.number }}</view>
+            </view>
+          </view>
+          <view class="total">
+            共{{ item.goodsNumber }}件商品 合计:
+            <text class="total-price"> ￥{{ item.amountReal }} </text>
+          </view>
+          <view v-if="item.status == 0" class="bottom">
+            <view class="exchange btn" @click="close(item.id)">取消订单</view>
+            <view class="evaluate btn u-margin-left-24" @click="pay(index)">
+              立即支付
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -11,11 +67,9 @@ export default {
     return {
       listActive: 0,
       orderList: undefined,
-      dataList: undefined,
       list: [
         {
           name: "待付款",
-          count: 0,
         },
         {
           name: "待发货",
@@ -29,7 +83,6 @@ export default {
     };
   },
   onLoad(e) {
-    console.log('onLoad => ', e);
     if (!e.status) {
       e.status = 0;
     }
@@ -54,21 +107,84 @@ export default {
   },
   methods: {
     async _orderStatistics() {
-      // if (res.code == 0) {
-      //   this.list[0].count = res.data.count_id_no_pay;
-      //   this.list[1].count = res.data.count_id_no_transfer;
-      //   this.list[2].count = res.data.count_id_no_confirm;
-      //   this.list.splice(0, 0);
-      // } else {
-      //   uni.showToast({
-      //     title: "获取订单统计失败",
-      //     icon: "none",
-      //   });
-      // }
+      this.list[0].count = 0;
+      this.list[1].count = 0;
+      this.list[2].count = 0;
+      this.list.splice(0, 0);
     },
     // 页面数据
-    async getOrderList() {
-      this.orderList = null;
+    getOrderList() {
+      this.orderList = [];
+      this.orderList.push({
+        id: 1,
+        orderNumber: "2023456789",
+        statusStr: "待付款",
+        amountReal: 100.0,
+        goodsList: [
+          {
+            id: 1,
+            pic: "/static/mario.jpg",
+            goodsName: "商品名称",
+            property: "颜色：红色",
+            number: 2,
+            amountSingle: 100.0,
+          },
+          {
+            id: 2,
+            pic: "/static/logo.png",
+            goodsName: "商品名称",
+            property: "颜色：红色",
+            number: 2,
+            amountSingle: 100.0,
+          },
+        ],
+        status: 0,
+        goodsNumber: 4,
+      });
+
+      this.orderList.push({
+        id: 2,
+        orderNumber: "2023456798",
+        statusStr: "待付款",
+        amountReal: 150.0,
+        goodsList: [
+          {
+            id: 1,
+            pic: "/static/logo.png",
+            goodsName: "商品名称",
+            property: "颜色：红色",
+            number: 2,
+            amountSingle: 150.0,
+          },
+          {
+            id: 2,
+            pic: "/static/mario.jpg",
+            goodsName: "商品名称",
+            property: "颜色：红色",
+            number: 2,
+            amountSingle: 100.0,
+          },
+        ],
+        status: 0,
+        goodsNumber: 4,
+      });
+
+      if (this.current === 0) {
+        this.orderList[0].statusStr = "待付款";
+        this.orderList[0].status = 0;
+        this.orderList[1].statusStr = "待付款";
+        this.orderList[1].status = 0;
+      } else if (this.current === 1) {
+        this.orderList[0].statusStr = "待发货";
+        this.orderList[0].status = 1;
+        this.orderList[1].statusStr = "待发货";
+        this.orderList[1].status = 1;
+      } else if (this.current === 2) {
+        this.orderList[0].statusStr = "待收货";
+        this.orderList[0].status = 1;
+        this.orderList[1].statusStr = "待收货";
+        this.orderList[1].status = 1;
+      }
     },
     goHome() {
       uni.switchTab({
@@ -78,6 +194,11 @@ export default {
     // tab栏切换
     change(index) {
       this.current = index;
+      if (typeof index == "number") {
+        this.current = index;
+      } else if (typeof index == "object") {
+        this.current = index.index;
+      }
       this._orderStatistics();
       this.getOrderList();
     },
@@ -92,11 +213,12 @@ export default {
         },
       });
     },
-    async _close(orderId) {
+    _close(orderId) {
+      this.orderList = this.orderList.filter((i) => i.id !== orderId);
       uni.showToast({
         title: "已取消" + orderId,
       });
-      this.change(this.current);
+      //this.change(this.current);
     },
     async pay(index) {
       var balance = 0;
@@ -127,110 +249,5 @@ page {
 </style>
 
 <style lang="scss" scoped>
-.order {
-  width: 710rpx;
-  background-color: #ffffff;
-  margin: 20rpx auto;
-  border-radius: 20rpx;
-  box-sizing: border-box;
-  padding: 20rpx;
-  font-size: 28rpx;
-  .top {
-    display: flex;
-    justify-content: space-between;
-    .left {
-      display: flex;
-      align-items: center;
-      .store {
-        margin: 0 10rpx;
-        font-size: 32rpx;
-        font-weight: bold;
-      }
-    }
-    .right {
-      color: $u-type-warning-dark;
-    }
-  }
-  .item {
-    display: flex;
-    margin: 20rpx 0 0;
-    .left {
-      margin-right: 20rpx;
-      image {
-        width: 200rpx;
-        height: 200rpx;
-        border-radius: 10rpx;
-      }
-    }
-    .content {
-      .title {
-        font-size: 28rpx;
-        line-height: 50rpx;
-      }
-      .type {
-        margin: 10rpx 0;
-        font-size: 24rpx;
-        color: $u-tips-color;
-      }
-      .delivery-time {
-        color: #e5d001;
-        font-size: 24rpx;
-      }
-    }
-    .right {
-      margin-left: 10rpx;
-      padding-top: 20rpx;
-      text-align: right;
-      .decimal {
-        font-size: 24rpx;
-        margin-top: 4rpx;
-      }
-      .number {
-        color: $u-tips-color;
-        font-size: 24rpx;
-      }
-    }
-  }
-  .total {
-    margin-top: 20rpx;
-    text-align: right;
-    font-size: 24rpx;
-    .total-price {
-      font-size: 32rpx;
-    }
-  }
-  .bottom {
-    display: flex;
-    margin-top: 40rpx;
-    padding: 0 10rpx;
-    justify-content: end;
-    align-items: center;
-    .btn {
-      line-height: 52rpx;
-      width: 160rpx;
-      border-radius: 26rpx;
-      border: 2rpx solid $u-border-color;
-      font-size: 26rpx;
-      text-align: center;
-      color: $u-type-info-dark;
-    }
-    .evaluate {
-      color: $u-type-warning-dark;
-      border-color: $u-type-warning-dark;
-    }
-  }
-}
-.wrap {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - var(--window-top));
-  width: 100%;
-}
-.swiper-box {
-  flex: 1;
-}
-.swiper-item {
-  height: 100%;
-}
-
+@import "./order.scss";
 </style>
