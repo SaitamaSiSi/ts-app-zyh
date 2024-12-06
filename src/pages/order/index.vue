@@ -22,7 +22,7 @@
       />
       <view v-else class="page-box">
         <view class="order" v-for="(item, index) in orderList" :key="item.id">
-          <view class="top" @click="godetail(item.id)">
+          <view class="top" @click="godetail(item.id, item.status)">
             <view class="left"> 订单号: {{ item.orderNumber }} </view>
             <view class="right">{{ item.statusStr }}</view>
           </view>
@@ -86,7 +86,7 @@ export default {
     if (!e.status) {
       e.status = 0;
     }
-    this.current = e.status;
+    this.current = parseInt(e.status);
     this.change(e.status);
   },
   computed: {
@@ -138,7 +138,7 @@ export default {
             amountSingle: 100.0,
           },
         ],
-        status: 0,
+        status: this.current,
         goodsNumber: 4,
       });
 
@@ -165,25 +165,20 @@ export default {
             amountSingle: 100.0,
           },
         ],
-        status: 0,
+        status: this.current,
         goodsNumber: 4,
       });
 
+      console.log(this.current)
       if (this.current === 0) {
         this.orderList[0].statusStr = "待付款";
-        this.orderList[0].status = 0;
         this.orderList[1].statusStr = "待付款";
-        this.orderList[1].status = 0;
       } else if (this.current === 1) {
         this.orderList[0].statusStr = "待发货";
-        this.orderList[0].status = 1;
         this.orderList[1].statusStr = "待发货";
-        this.orderList[1].status = 1;
       } else if (this.current === 2) {
         this.orderList[0].statusStr = "待收货";
-        this.orderList[0].status = 1;
         this.orderList[1].statusStr = "待收货";
-        this.orderList[1].status = 1;
       }
     },
     goHome() {
@@ -193,7 +188,6 @@ export default {
     },
     // tab栏切换
     change(index) {
-      this.current = index;
       if (typeof index == "number") {
         this.current = index;
       } else if (typeof index == "object") {
@@ -231,9 +225,10 @@ export default {
         confirmText: "我知道了",
       });
     },
-    godetail(orderId) {
+    godetail(orderId, status) {
+      // status不需要，后续通过接口获取，这里仅用于测试
       uni.navigateTo({
-        url: "./detail?id=" + orderId,
+        url: `./detail?id=${orderId}&status=${status}`,
       });
     },
   },
