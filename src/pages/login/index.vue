@@ -3,6 +3,12 @@
     <u-empty mode="permission" text="请先登陆" marginTop="88rpx"></u-empty>
     <view class="form-box">
       <u-form ref="uForm" label-width="130rpx" :model="form">
+        <u-form-item label="检测方式" required>
+          <u-radio-group v-model="testType">
+            <u-radio name="1" label="硬编码" />
+            <u-radio name="2" label="后端请求" />
+          </u-radio-group>
+        </u-form-item>
         <u-form-item label="登录方式" required>
           <u-radio-group v-model="loginType">
             <u-radio name="account" label="账号登录" />
@@ -88,7 +94,8 @@ export default {
         mobile: "vben",
         pwd: "123456",
         qrcode: "123456",
-      }
+      },
+      testType: "1", // 该字段不必要，仅测试
     };
   },
   created() {},
@@ -99,11 +106,13 @@ export default {
   onLoad(e) {},
   onShow() {},
   methods: {
+    setValue() {
+      uni.setStorageSync("testType", this.testType);
+    },
     submit() {
       this.$refs.uForm
         .validate()
         .then((res) => {
-          console.log('red => ', res);
           if (this.loginType === "qrcode") {
             this.qrcodeLogin();
           } else if (this.loginType === "account") {
@@ -116,93 +125,103 @@ export default {
       uni.showLoading({
         title: "登陆中...",
       });
-      var qrcodeRes = await VertyQrcodenApi({ VertyValue: this.form.qrcode });
 
-      uni.hideLoading();
-      if (
-        qrcodeRes != null &&
-        qrcodeRes.status === 1 &&
-        qrcodeRes.data.IsVerty
-      ) {
-        uni.switchTab({
-          url: "/pages/home/index",
-        });
-        uni.showToast({
-          title: "登录成功",
-          icon: "success",
-        });
-      } else {
-        const that = this;
-        uni.showModal({
-          title: "登录失败, 是否进行静态校验 ?",
-          content: 'qrcode校验失败',
-          showCancel: true,
-          success: function (res) {
-            if (res.confirm) {
-              if (that.form.qrcode === "123456") {
-                uni.switchTab({
-                  url: "/pages/home/index",
-                });
-                uni.showToast({
-                  title: "登录成功",
-                  icon: "success",
-                });
-              } else {
-                uni.showModal({
-                  title: "登录失败",
-                  content: "qrcode错误",
-                });
+      if (this.testType == "2") {
+        var qrcodeRes = await VertyQrcodenApi({ VertyValue: this.form.qrcode });
+        uni.hideLoading();
+        if (
+          qrcodeRes != null &&
+          qrcodeRes.status === 1 &&
+          qrcodeRes.data.IsVerty
+        ) {
+          this.setValue();
+          uni.switchTab({
+            url: "/pages/home/index",
+          });
+          uni.showToast({
+            title: "登录成功",
+            icon: "success",
+          });
+        } else {
+          uni.showModal({
+            title: "登录失败",
+            content: "qrcode校验失败",
+            showCancel: true,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
               }
-            } else if (res.cancel) {
-            }
-          },
-        });
+            },
+          });
+        }
+      } else {
+        uni.hideLoading();
+        if (this.form.qrcode === "123456") {
+          this.setValue();
+          uni.switchTab({
+            url: "/pages/home/index",
+          });
+          uni.showToast({
+            title: "登录成功",
+            icon: "success",
+          });
+        } else {
+          uni.showModal({
+            title: "登录失败",
+            content: "qrcode错误",
+          });
+        }
       }
     },
     async accountLogin() {
       uni.showLoading({
         title: "登陆中...",
       });
-      var loginRes = await AuthLoginApi({
-        username: this.form.mobile,
-        password: this.form.pwd,
-      });
 
-      uni.hideLoading();
-      if (loginRes != null && loginRes.status === 1) {
-        uni.switchTab({
-          url: "/pages/home/index",
+      if (this.testType == "2") {
+        var loginRes = await AuthLoginApi({
+          username: this.form.mobile,
+          password: this.form.pwd,
         });
-        uni.showToast({
-          title: "登录成功",
-          icon: "success",
-        });
-      } else {
-        const that = this;
-        uni.showModal({
-          title: "登录失败, 是否进行静态校验 ?",
-          content: loginRes.data.desc,
-          showCancel: true,
-          success: function (res) {
-            if (res.confirm) {
-              if (that.form.mobile === "vben" && that.form.pwd === "123456") {
-                uni.switchTab({
-                  url: "/pages/home/index",
-                });
-                uni.showToast({
-                  title: "登录成功",
-                  icon: "success",
-                });
-              } else {
-                uni.showModal({
-                  title: "登录失败",
-                  content: "用户名或密码错误",
-                });
+        uni.hideLoading();
+        if (loginRes != null && loginRes.status === 1) {
+          this.setValue();
+          uni.switchTab({
+            url: "/pages/home/index",
+          });
+          uni.showToast({
+            title: "登录成功",
+            icon: "success",
+          });
+        } else {
+          uni.showModal({
+            title: "登录失败, 是否进行静态校验 ?",
+            content: loginRes.data.desc,
+            showCancel: true,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
               }
-            } else if (res.cancel) {
-            }
-          },
-        });
+            },
+          });
+        }
+      } else {
+        uni.hideLoading();
+        if (this.form.mobile === "vben" && this.form.pwd === "123456") {
+          this.setValue();
+          uni.switchTab({
+            url: "/pages/home/index",
+          });
+          uni.showToast({
+            title: "登录成功",
+            icon: "success",
+          });
+        } else {
+          uni.showModal({
+            title: "登录失败",
+            content: "用户名或密码错误",
+          });
+        }
       }
     },
     goReg() {

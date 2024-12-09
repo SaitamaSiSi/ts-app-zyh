@@ -26,24 +26,34 @@ export default {
   methods: {
     async _getAboutPage() {
       if (this.key === "qrcode") {
-        uni.showLoading({
-          title: "获取二维码中...",
-        });
-        var qrcodeRes = await GetQrcodeApi({});
-        uni.hideLoading();
-        console.log('qrcodeRes => ', qrcodeRes);
-        if (qrcodeRes && qrcodeRes.status === 1) {
-          this.htmlContent = `
+        if (await uni.getStorageSync("goodsList") === "2") {
+          uni.showLoading({
+            title: "获取二维码中...",
+          });
+          var qrcodeRes = await GetQrcodeApi({});
+          uni.hideLoading();
+          console.log("qrcodeRes => ", qrcodeRes);
+          if (qrcodeRes && qrcodeRes.status === 1) {
+            this.htmlContent = `
           <div style="color: red">
             <h1>关于Qr Code二维码</h1>
             <p>该二维码可以直接用于登录账户, 非常重要, 请妥善保存 !</p>
             <img src="data:image/png;base64,${qrcodeRes.data.Url}" alt="QR Code" />
           </div>
-          `
+          `;
+          } else {
+            uni.showToast({
+              title: "获取二维码失败",
+            });
+          }
         } else {
-          uni.showToast({
-            title: "获取二维码失败",
-          });
+          this.htmlContent = `
+          <div style="color: red">
+            <h1>关于Qr Code二维码</h1>
+            <p>该二维码可以直接用于登录账户, 非常重要, 请妥善保存 !</p>
+            <p>后端程序暂未开启, 无法获取到二维码 !</p>
+          </div>
+          `;
         }
       } else {
         this.htmlContent = `

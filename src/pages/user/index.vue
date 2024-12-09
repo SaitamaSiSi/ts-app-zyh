@@ -56,7 +56,7 @@ export default {
       </uni-grid>
       <view>
         <uni-list :border="true">
-          <uni-list-item link :to="'/pages/login/index?key=address'">
+          <uni-list-item link :to="'/pages/address/index?key=address'">
             <template v-slot:header>
               <uni-icons type="map" :size="46" color="#a78845"></uni-icons>
             </template>
