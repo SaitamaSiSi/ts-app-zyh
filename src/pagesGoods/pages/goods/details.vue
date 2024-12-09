@@ -60,7 +60,7 @@ export default {
     addCart() {
       if (!getApp().checkHasLogined()) {
         uni.navigateTo({
-          url: "/pages/index/index",
+          url: "/pages/login/index",
         });
         return;
       }
@@ -74,7 +74,7 @@ export default {
     buy() {
       if (!getApp().checkHasLogined()) {
         uni.navigateTo({
-          url: "/pages/index/index",
+          url: "/pages/login/index",
         });
         return;
       }

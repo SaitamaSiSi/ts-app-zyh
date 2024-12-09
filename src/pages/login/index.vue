@@ -226,12 +226,12 @@ export default {
     },
     goReg() {
       uni.redirectTo({
-        url: "/pages/login/reg",
+        url: "/pagesLogin/pages/login/reg",
       });
     },
     goResetpwd() {
       uni.navigateTo({
-        url: "/pages/login/resetpwd",
+        url: "/pagesLogin/pages/login/resetpwd",
       });
     },
   },

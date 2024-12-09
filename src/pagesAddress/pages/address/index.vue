@@ -112,7 +112,7 @@ export default {
     toAddSite(index) {
       const item = index == -1 ? null : this.siteList[index];
       uni.navigateTo({
-        url: "/pages/address/addSite?id=" + (item ? item.id : ""),
+        url: "./addSite?id=" + (item ? item.id : ""),
       });
     },
     open(index) {

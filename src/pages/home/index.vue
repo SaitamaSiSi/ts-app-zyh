@@ -87,7 +87,7 @@ export default {
 
     function handleProductClick(product) {
       uni.navigateTo({
-        url: `../goods/details?id=${product.id}`,
+        url: `/pagesGoods/pages/goods/details?id=${product.id}`,
       });
     }
 
