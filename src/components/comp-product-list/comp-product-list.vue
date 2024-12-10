@@ -40,7 +40,7 @@ export default {
                 <image class="card-head-img" mode="fill" :src="item.url" />
             </view>
             <view class="card-body"  @click="onClick(item)">
-                <text class="card-body-text">{{ item.comment }}</text>
+                <u-text :lines="3" :size="12" :text="item.comment" />
             </view>
             <view class="card-actions">
                 <view class="card-actions-item">
@@ -113,25 +113,9 @@ export default {
 
 .card-body {
     width: 80%;
+    height: 100rpx;
     margin: 0rpx 10%;
     background-color: white;
-}
-
-.card-body-text {
-    font-size: 24rpx;
-    padding: 10rpx;
-    height: 110rpx;
-    overflow: hidden;
-    word-break: break-all;
-    /* break-all(允许在单词内换行。) */
-    text-overflow: ellipsis;
-    /* 超出部分省略号 */
-    display: -webkit-box;
-    /** 对象作为伸缩盒子模型显示 **/
-    -webkit-box-orient: vertical;
-    /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-    -webkit-line-clamp: 3;
-    /** 显示的行数 **/
 }
 
 </style>
