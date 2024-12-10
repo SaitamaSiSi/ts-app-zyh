@@ -16,7 +16,7 @@
       <text>Ұ</text>
       {{ goodsDetail.basicInfo.price }}
     </view>
-    <u-subsection title="商品介绍" :right="false"></u-subsection>
+    <uni-section class="shop-section" title="商品介绍" type="line"></uni-section>
     <view class="content">
       <u-parse :content="goodsDetail.content"></u-parse>
     </view>
@@ -33,7 +33,7 @@
 export default {
   data() {
     return {
-      goodsDetail: undefined
+      goodsDetail: undefined,
     };
   },
   onLoad(e) {
@@ -86,14 +86,13 @@ export default {
           goodsName: this.goodsDetail.basicInfo.name,
           number: this.goodsDetail.basicInfo.buyNumber,
           pic: this.goodsDetail.basicInfo.pic,
-          price: this.goodsDetail.basicInfo.price
+          price: this.goodsDetail.basicInfo.price,
         },
       ];
-      console.log(goodsList);
       // uni.setStorageSync("goodsList", goodsList); // uni.getStorageSync("goodsList", goodsList);
-      // uni.navigateTo({
-      //   url: "../to-pay-order/index?mod=buy",
-      // });
+      uni.navigateTo({
+        url: "/packages/pages/pay/index?mod=buy",
+      });
     },
   },
 };

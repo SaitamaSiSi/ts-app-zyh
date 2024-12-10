@@ -36,19 +36,19 @@ export default {
       </view>
       <uni-grid :column="3">
         <uni-grid-item>
-          <view class="item" @click="go('/pagesOrder/pages/order/index?status=0')">
+          <view class="item" @click="go('/packages/pages/order/index?status=0')">
             <uni-icons type="shop" :size="46" color="#a78845"></uni-icons>
             <view class="grid-text">待支付</view>
           </view>
         </uni-grid-item>
         <uni-grid-item>
-          <view class="item" @click="go('/pagesOrder/pages/order/index?status=1')">
+          <view class="item" @click="go('/packages/pages/order/index?status=1')">
             <uni-icons type="cart" :size="46" color="#a78845"></uni-icons>
             <view class="grid-text">待发货</view>
           </view>
         </uni-grid-item>
         <uni-grid-item>
-          <view class="item" @click="go('/pagesOrder/pages/order/index?status=2')">
+          <view class="item" @click="go('/packages/pages/order/index?status=2')">
             <uni-icons type="gift" :size="46" color="#a78845"></uni-icons>
             <view class="grid-text">已发货</view>
           </view>
@@ -56,7 +56,7 @@ export default {
       </uni-grid>
       <view>
         <uni-list :border="true">
-          <uni-list-item link :to="'/pagesAddress/pages/address/index?key=address'">
+          <uni-list-item link :to="'/packages/pages/address/index?key=address'">
             <template v-slot:header>
               <uni-icons type="map" :size="46" color="#a78845"></uni-icons>
             </template>
@@ -66,7 +66,7 @@ export default {
               </view>
             </template>
           </uni-list-item>
-          <uni-list-item link :to="'/pagesAbout/pages/about/index?key=qrcode'">
+          <uni-list-item link :to="'/packages/pages/about/index?key=qrcode'">
             <template v-slot:header>
               <uni-icons type="locked" :size="46" color="#a78845"></uni-icons>
             </template>
@@ -76,7 +76,7 @@ export default {
               </view>
             </template>
           </uni-list-item>
-          <uni-list-item link :to="'/pagesAbout/pages/about/index?key=aboutus'">
+          <uni-list-item link :to="'/packages/pages/about/index?key=aboutus'">
             <template v-slot:header>
               <uni-icons type="contact" :size="46" color="#a78845"></uni-icons>
             </template>

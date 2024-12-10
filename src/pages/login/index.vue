@@ -19,7 +19,7 @@
           <u-form-item label="手机号码" prop="mobile" required>
             <u-input
               v-model="form.mobile"
-              type="number"
+              type="text"
               clearable
               maxlength="11"
               focus
@@ -226,12 +226,12 @@ export default {
     },
     goReg() {
       uni.redirectTo({
-        url: "/pagesLogin/pages/login/reg",
+        url: "/packages/pages/login/reg",
       });
     },
     goResetpwd() {
       uni.navigateTo({
-        url: "/pagesLogin/pages/login/resetpwd",
+        url: "/packages/pages/login/resetpwd",
       });
     },
   },

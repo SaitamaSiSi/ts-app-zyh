@@ -1,10 +1,10 @@
 <template>
   <view v-if="orderDetail" class="to-pay-order">
-    <u-subsection
+    <uni-section
       class="shop-section"
       title="配送地址"
-      :right="false"
-    ></u-subsection>
+      type="line"
+    ></uni-section>
     <u-cell
       v-if="orderDetail.logistics"
       icon="map"
@@ -20,11 +20,11 @@
         orderDetail.logistics.address
       "
     ></u-cell>
-    <u-subsection
+    <uni-section
       class="shop-section"
       title="商品信息"
-      :right="false"
-    ></u-subsection>
+      type="line"
+    ></uni-section>
     <view class="order">
       <view
         class="item"
@@ -50,20 +50,20 @@
         </text>
       </view>
     </view>
-    <u-subsection
+    <uni-section
       v-if="orderDetail.orderInfo.remark"
       class="shop-section"
       title="订单备注"
-      :right="false"
-    ></u-subsection>
+      type="line"
+    ></uni-section>
     <view v-if="orderDetail.orderInfo.remark" class="remark">
       {{ orderDetail.orderInfo.remark }}
     </view>
-    <u-subsection
+    <uni-section
       class="shop-section"
       title="合计"
-      :right="false"
-    ></u-subsection>
+      type="line"
+    ></uni-section>
     <u-cell
       title="商品金额"
       :value="'¥' + orderDetail.orderInfo.amount"
@@ -80,11 +80,11 @@
       :arrow="false"
     ></u-cell>
     <template v-if="orderDetail.logisticsTraces">
-      <u-subsection
+      <uni-section
         class="shop-section"
         title="配送信息"
-        :right="false"
-      ></u-subsection>
+        type="line"
+      ></uni-section>
       <view class="logisticsTraces">
         <u-steps
           :current="orderDetail.logisticsTraces.length - 1"

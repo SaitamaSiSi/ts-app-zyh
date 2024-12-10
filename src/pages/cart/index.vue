@@ -69,9 +69,8 @@ export default {
 
     // 购买
     function onSubmit() {
-      uni.showToast({
-        title: "提交",
-        icon: "success",
+      uni.navigateTo({
+        url: "/packages/pages/pay/index?mod=cart",
       });
     }
 
