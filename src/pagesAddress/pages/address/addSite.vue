@@ -3,14 +3,14 @@
     <view class="top">
       <u-form ref="uForm" label-width="auto" :model="form">
         <u-form-item label="收货人" prop="linkMan" required>
-          <up-input
+          <u-input
             v-model="form.linkMan"
             clearable
             placeholder="请输入收货人"
           />
         </u-form-item>
         <u-form-item label="手机号码" prop="mobile" required>
-          <up-input
+          <u-input
             v-model="form.mobile"
             type="number"
             clearable
@@ -19,7 +19,7 @@
         </u-form-item>
         <u-form-item label="所在地区" prop="areaDisplay" required>
           <view @click="showRegion = true">
-            <up-input
+            <u-input
               v-model="form.areaDisplay"
               type="select"
               !clearable
@@ -39,7 +39,7 @@
           prop="address"
           required
         >
-          <up-textarea
+          <u-textarea
             v-model="form.address"
             type="textarea"
             :auto-height="true"
