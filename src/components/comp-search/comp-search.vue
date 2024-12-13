@@ -16,11 +16,17 @@ export default {
     setup(props, ctx) {
         const searchText = ref('');
 
+        function scan() {
+            ctx.emit('handleScan');
+        }
+
         function search() {
             ctx.emit('handleSearch', searchText.value);
         }
+
         return {
             searchText,
+            scan,
             search
         };
     },
@@ -31,6 +37,7 @@ export default {
     <view class="search-container">
         <icon class="search-icon" type="search" size="18"/>
         <input class="search-input" :placeholder="placeholder" v-model="searchText" />
+        <uni-icons class="scan-icon" type="camera" size="30" @click="scan"></uni-icons>
         <button class="search-button mini-btn" type="primary" size="mini" @click="search">搜索</button>
     </view>
 </template>
@@ -57,9 +64,16 @@ export default {
     flex: 1;
 }
 
+.search-container .scan-icon {
+    margin-right: 5rpx;
+    padding: 0;
+    width: 80rpx;
+}
+
 .search-container .search-button {
     margin-right: 20rpx;
     padding: 0;
     width: 80rpx;
+    border-radius: 90rpx;
 }
 </style>

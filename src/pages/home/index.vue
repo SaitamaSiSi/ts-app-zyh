@@ -52,6 +52,48 @@ export default {
       });
     }
 
+    function handleScan() {
+      uni.scanCode({
+        success: (res) => {
+          // console.log(`scanType:${res.scanType}`);
+          // console.log(`charSet:${res.charSet}`);
+          // console.log(`errMsg:${res.errMsg}`);
+          // console.log(`rawData:${res.rawData}`);
+          // console.log(`result:${res.result}`);
+          if (res.scanType == "QR_CODE") {
+            if (res.charSet.toUpperCase() == "UTF-8") {
+              let object = JSON.parse(res.result.replace(/\'/g, '"'));
+              uni.showModal({
+                title: "产品信息",
+                // content: `名称:${object.name}\r\n序列:${object.serial_number}\r\n位置:${object.location}\r\n状态:${object.status}`,
+                content: JSON.stringify(object),
+                showCancel: false,
+              });
+            } else {
+              uni.showModal({
+                title: "charSet错误",
+                content: res.charSet,
+                showCancel: false,
+              });
+            }
+          } else {
+            uni.showModal({
+              title: "scanType错误",
+              content: res.scanType,
+              showCancel: false,
+            });
+          }
+        },
+        fail: (e) => {
+          uni.showModal({
+            title: "fail",
+            content: e,
+            showCancel: false,
+          });
+        },
+      });
+    }
+
     function handleSearch(value) {
       console.log("搜索 => ", value);
       uni.showModal({
@@ -156,6 +198,7 @@ export default {
       productList,
       showLoading,
       clickSwiper,
+      handleScan,
       handleSearch,
       storeTypeChange,
       productTypeChange,
@@ -171,7 +214,7 @@ export default {
 <template>
   <view class="container">
     <view class="page-header">
-      <CompSearch placeholder="肚条 火热售卖中" @handle-search="handleSearch" />
+      <CompSearch placeholder="肚条 火热售卖中" @handle-search="handleSearch" @handle-scan="handleScan" />
       <view class="uni-margin-wrap">
         <swiper
           class="swiper"
