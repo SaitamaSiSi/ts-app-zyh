@@ -26,7 +26,7 @@ export default {
   methods: {
     async _getAboutPage() {
       if (this.key === "qrcode") {
-        if (await uni.getStorageSync("goodsList") === "2") {
+        if (await uni.getStorageSync("testType") === "2") {
           uni.showLoading({
             title: "获取二维码中...",
           });

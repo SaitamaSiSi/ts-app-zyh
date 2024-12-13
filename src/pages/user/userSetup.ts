@@ -25,7 +25,7 @@ export function userSetup() {
     // 如果未登录
     if (false) {
       uni.redirectTo({
-        url: '/pages/index/index?id=123'
+        url: '/pages/login/index?id=123'
       })
     }
   });

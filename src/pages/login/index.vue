@@ -186,6 +186,8 @@ export default {
         uni.hideLoading();
         if (loginRes != null && loginRes.status === 1) {
           this.setValue();
+          uni.setStorageSync("accessToken", loginRes.data.accessToken);
+          uni.setStorageSync("refreshToken", loginRes.data.refreshToken);
           uni.switchTab({
             url: "/pages/home/index",
           });
@@ -195,7 +197,7 @@ export default {
           });
         } else {
           uni.showModal({
-            title: "登录失败, 是否进行静态校验 ?",
+            title: "登录失败",
             content: loginRes.data.desc,
             showCancel: true,
             success: function (res) {
