@@ -15,12 +15,6 @@
 				"selectedIconPath": "static/images/tabbar/like-o.png"
 			},
 			{
-				"pagePath": "pages/cart/index",
-				"text": " ",
-				"iconPath": "static/images/tabbar/cart-f.png",
-				"selectedIconPath": "static/images/tabbar/cart-o.png"
-			},
-			{
 				"pagePath": "pages/user/index",
 				"text": " ",
 				"iconPath": "static/images/tabbar/user-f.png",
@@ -33,13 +27,6 @@
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录"
-			}
-		},
-		{
-			"path": "pages/cart/index",
-			"style": {
-				"navigationBarTitleText": "购物车",
-				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -59,7 +46,7 @@
 	],
 	"subPackages": [
 		{
-			"root": "packages",
+			"root": "defaultPackages",
 			"pages": [
 				{
 					"path": "pages/about/index",
@@ -67,6 +54,41 @@
 						"navigationBarTitleText": ""
 					}
 				},
+				{
+					"path": "pages/login/reg",
+					"style": {
+						"navigationBarTitleText": "注册新用户"
+					}
+				},
+				{
+					"path": "pages/login/resetpwd",
+					"style": {
+						"navigationBarTitleText": "忘记密码找回"
+					}
+				},
+				{
+					"path": "pages/canvasD/index",
+					"style": {
+						"navigationBarTitleText": "Canvas画板"
+					}
+				},
+				{
+					"path": "pages/mapD/index",
+					"style": {
+						"navigationBarTitleText": "地图"
+					}
+				},
+				{
+					"path": "pages/mediaD/index",
+					"style": {
+						"navigationBarTitleText": "多媒体"
+					}
+				}
+			]
+		},
+		{
+			"root": "shopPackages",
+			"pages": [
 				{
 					"path": "pages/address/index",
 					"style": {
@@ -98,18 +120,6 @@
 					}
 				},
 				{
-					"path": "pages/login/reg",
-					"style": {
-						"navigationBarTitleText": "注册新用户"
-					}
-				},
-				{
-					"path": "pages/login/resetpwd",
-					"style": {
-						"navigationBarTitleText": "忘记密码找回"
-					}
-				},
-				{
 					"path" : "pages/pay/index",
 					"style": {
 						"navigationBarTitleText": "确认订单"
@@ -122,7 +132,7 @@
 		"pages/login/index": { 
 			"network": "all",
 			"packages": [
-				"packages"
+				"defaultPackages"
 			]
 		}
 	},

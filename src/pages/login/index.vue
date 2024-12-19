@@ -228,12 +228,12 @@ export default {
     },
     goReg() {
       uni.redirectTo({
-        url: "/packages/pages/login/reg",
+        url: "/defaultPackages/pages/login/reg",
       });
     },
     goResetpwd() {
       uni.navigateTo({
-        url: "/packages/pages/login/resetpwd",
+        url: "/defaultPackages/pages/login/resetpwd",
       });
     },
   },

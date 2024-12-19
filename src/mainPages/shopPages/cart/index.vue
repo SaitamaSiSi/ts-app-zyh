@@ -70,7 +70,7 @@ export default {
     // 购买
     function onSubmit() {
       uni.navigateTo({
-        url: "/packages/pages/pay/index?mod=cart",
+        url: "/shopPackages/pages/pay/index?mod=cart",
       });
     }
 

@@ -4,7 +4,7 @@ import { userSetup } from "./userSetup";
 export default {
   name: "user",
   setup() {
-    return { ...userSetup() };
+    return userSetup();
   },
 };
 </script>
@@ -36,26 +36,36 @@ export default {
       </view>
       <uni-grid :column="3">
         <uni-grid-item>
-          <view class="item" @click="go('/defaultPackages/pages/canvasD/index')">
+          <view class="item" @click="go('/shopPackages/pages/order/index?status=0')">
             <uni-icons type="shop" :size="46" color="#a78845"></uni-icons>
-            <view class="grid-text">Canvas</view>
+            <view class="grid-text">待支付</view>
           </view>
         </uni-grid-item>
         <uni-grid-item>
-          <view class="item" @click="go('/defaultPackages/pages/mapD/index')">
+          <view class="item" @click="go('/shopPackages/pages/order/index?status=1')">
             <uni-icons type="cart" :size="46" color="#a78845"></uni-icons>
-            <view class="grid-text">地图</view>
+            <view class="grid-text">待发货</view>
           </view>
         </uni-grid-item>
         <uni-grid-item>
-          <view class="item" @click="go('/defaultPackages/pages/mediaD/index')">
+          <view class="item" @click="go('/shopPackages/pages/order/index?status=2')">
             <uni-icons type="gift" :size="46" color="#a78845"></uni-icons>
-            <view class="grid-text">多媒体</view>
+            <view class="grid-text">已发货</view>
           </view>
         </uni-grid-item>
       </uni-grid>
       <view>
         <uni-list :border="true">
+          <uni-list-item link :to="'/shopPackages/pages/address/index?key=address'">
+            <template v-slot:header>
+              <uni-icons type="map" :size="46" color="#a78845"></uni-icons>
+            </template>
+            <template v-slot:body>
+              <view class="slot-box">
+                <text class="slot-text">收货地址</text>
+              </view>
+            </template>
+          </uni-list-item>
           <uni-list-item link :to="'/defaultPackages/pages/about/index?key=qrcode'">
             <template v-slot:header>
               <uni-icons type="locked" :size="46" color="#a78845"></uni-icons>

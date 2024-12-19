@@ -128,10 +128,8 @@ export default {
     }
 
     function handleProductClick(product) {
-      uni.showModal({
-        title: "点击产品",
-        content: `名称:${product.name},价格:${product.price}`,
-        showCancel: false,
+      uni.navigateTo({
+        url: `/shopPackages/pages/goods/details?id=${product.id}`,
       });
     }
 
