@@ -21,6 +21,14 @@
     <u-button @click="drawVideo">绘制Video</u-button>
     <u-button @click="drawBezier">绘制贝塞尔曲线</u-button>
     <u-button @click="drawAnimation">绘制动画</u-button>
+    <video
+      id="tempVideo"
+      style="display: none"
+      autoplay
+      muted
+      loop
+      @play="videoPlay"
+    />
   </view>
 </template>
 
@@ -29,10 +37,13 @@ export default {
   data() {
     return {
       ctx: null,
+      intervalStopList: [],
+      videoTemp: null, // 后续需要改变方法
     };
   },
   onReady: function (e) {
     this.ctx = uni.createCanvasContext("firstCanvas", this);
+    this.videoTemp = uni.createVideoContext("tempVideo", this);
   },
   methods: {
     errorCallback: function (e) {
@@ -96,6 +107,9 @@ export default {
     },
     clearDraw() {
       this.ctx.draw();
+      this.intervalStopList.forEach((item) => {
+        clearInterval(item);
+      });
     },
     baseDraw() {
       this.ctx.setStrokeStyle("#00ff00");
@@ -134,13 +148,7 @@ export default {
             // src: "http://192.168.1.134:5000/api/file/v1/png.png",
             src: "http://192.168.1.134:5000/api/file/v1/bmp.bmp",
             success: (img) => {
-              this.ctx.drawImage(
-                img.path,
-                0,
-                0,
-                300,
-                200
-              );
+              this.ctx.drawImage(img.path, 0, 0, 300, 200);
               this.ctx.draw(true);
             },
             fail: (err) => {
@@ -168,7 +176,18 @@ export default {
         }
       }
     },
-    drawVideo() {},
+    videoPlay() {
+      const that = this;
+      var intervalNum = setInterval(function () {
+        that.ctx.drawImage(that.videoTemp, 0, 0);
+        that.ctx.draw();
+      }, 20);
+      this.intervalStopList.push(intervalNum);
+    },
+    drawVideo() {
+      this.videoTemp.src = "http://192.168.1.134:5000/api/file/v1/mp4.pm4";
+      this.videoTemp.play();
+    },
     drawBezier() {
       // Draw points
       this.ctx.beginPath();
