@@ -12,6 +12,19 @@
       @longtap="longTapCallback"
       @error="errorCallback"
     ></canvas>
+    <canvas
+      style="width: 300px; height: 300px; margin: auto; display: block"
+      canvas-id="secondCanvas"
+      id="secondCanvas"
+      type="2d"
+      @touchstart="touchStartCallback"
+      @touchmove="touchMoveCallback"
+      @touchend="touchEndCallback"
+      @touchcancel="touchCancelCallback"
+      @tap="tapCallback"
+      @longtap="longTapCallback"
+      @error="errorCallback"
+    ></canvas>
     <u-button @click="clearDraw">清空</u-button>
     <u-button @click="baseDraw">基本绘制</u-button>
     <u-button @click="drawText">绘制文本</u-button>
@@ -22,13 +35,15 @@
     <u-button @click="drawBezier">绘制贝塞尔曲线</u-button>
     <u-button @click="drawAnimation">绘制动画</u-button>
     <video
-      id="tempVideo"
-      style="display: none"
-      autoplay
+      id="myVideo"
+      :src="videoSrc"
+      :controls="false"
       muted
-      loop
-      @play="videoPlay"
+      @ended="endedCallback"
+      @loadedmetadata="loadedmetadataCallback"
+      style="display: none"
     />
+    <image ref="myImg" id="myImg" :src="imgSrc" />
   </view>
 </template>
 
@@ -38,14 +53,42 @@ export default {
     return {
       ctx: null,
       intervalStopList: [],
-      videoTemp: null, // 后续需要改变方法
+      videoSrc: "",
+      imgDom: null,
+      imgSrc: "http://192.168.1.134:5000/api/file/v1/gif.gif",
     };
   },
-  onReady: function (e) {
+  onLoad: function () {},
+  onReady: async function (e) {
     this.ctx = uni.createCanvasContext("firstCanvas", this);
-    this.videoTemp = uni.createVideoContext("tempVideo", this);
+
+    // type = '2d'
+    // const canvasRes = await this.getCanvasNode('secondCanvas', this);
+    // var secondCanvas = canvasRes[0].node;
+    // var secondCtx = secondCanvas.getContext('2d');
+    // secondCtx.fillRect(0, 0, 300, 200);
+  },
+  beforeUnmount() {
+    console.log("traggetr beforeUnmount");
+    this.intervalStopList.forEach((item) => {
+      clearInterval(item);
+    });
+  },
+  mounted() {
+    this.imgDom = this.$refs.myImg;
   },
   methods: {
+    // 获取canvas
+    getCanvasNode(id, instance) {
+      const query = uni.createSelectorQuery().in(instance);
+      const queryCvs = query.select(`#${id}`).node();
+
+      return new Promise((resolve, reject) => {
+        queryCvs.exec((res) => {
+          resolve(res);
+        });
+      });
+    },
     errorCallback: function (e) {
       console.error(e.detail.errMsg);
     },
@@ -106,6 +149,7 @@ export default {
       return promises;
     },
     clearDraw() {
+      console.log("tragger clearDraw");
       this.ctx.draw();
       this.intervalStopList.forEach((item) => {
         clearInterval(item);
@@ -130,6 +174,7 @@ export default {
       this.ctx.draw();
     },
     drawText() {
+      console.log("ctx => ", this.ctx);
       // 设置字体样式
       this.ctx.font = "bold 20px Arial";
       this.ctx.setFontSize(18);
@@ -172,21 +217,81 @@ export default {
         }
         case 3: {
           // gif
+          // uni
+          //   .createSelectorQuery()
+          //   .select("#secondCanvas")
+          //   .fields({ node: true, size: true })
+          //   .exec(async (res) => {
+          //     const canvas = res[0].node;
+          //     const ctx = canvas.getContext("2d");
+          //     const dpr = uni.getSystemInfoSync().pixelRatio;
+          //     canvas.width = res[0].width * dpr;
+          //     canvas.height = res[0].height * dpr;
+
+          //     var intervalNum = setInterval(function () {
+          //       ctx.save();
+          //       console.log("draw img");
+          //       ctx.drawImage(this.imgDom, 0, 0);
+          //       ctx.restore();
+          //     }, 20);
+          //     this.intervalStopList.push(intervalNum);
+          //     console.log("intervalNum => ", intervalNum);
+          //     console.log("this.intervalStopList => ", this.intervalStopList);
+          //   });
           break;
         }
       }
     },
-    videoPlay() {
-      const that = this;
-      var intervalNum = setInterval(function () {
-        that.ctx.drawImage(that.videoTemp, 0, 0);
-        that.ctx.draw();
-      }, 20);
-      this.intervalStopList.push(intervalNum);
-    },
     drawVideo() {
-      this.videoTemp.src = "http://192.168.1.134:5000/api/file/v1/mp4.pm4";
-      this.videoTemp.play();
+      this.videoSrc = "http://192.168.1.134:5000/api/core/getByName/mp4.mp4";
+    },
+    loadedmetadataCallback(event) {
+      console.log("loadedmetadataCallback => ", event);
+      uni
+        .createSelectorQuery()
+        .select("#secondCanvas")
+        .fields({ node: true, size: true })
+        .exec(async (res) => {
+          const canvas = res[0].node;
+          const ctx = canvas.getContext("2d");
+          const dpr = uni.getSystemInfoSync().pixelRatio;
+          canvas.width = res[0].width * dpr;
+          canvas.height = res[0].height * dpr;
+
+          uni
+            .createSelectorQuery()
+            .select("#myVideo")
+            .context((res) => {
+              // res.context 就是video节点的VideoContext对象
+              const videoContext = res.context;
+              // 这里可以对videoContext进行操作，例如播放视频
+              videoContext.play();
+
+              var intervalNum = setInterval(function () {
+                ctx.save();
+                console.log("draw video");
+                ctx.drawImage(videoContext, 0, 0);
+                ctx.restore();
+              }, 20);
+              this.intervalStopList.push(intervalNum);
+              console.log("intervalNum => ", intervalNum);
+              console.log("this.intervalStopList => ", this.intervalStopList);
+            })
+            .exec();
+        });
+    },
+    endedCallback(event) {
+      console.log("endedCallback => ", event);
+      uni
+        .createSelectorQuery()
+        .select("#myVideo")
+        .context((res) => {
+          // res.context 就是video节点的VideoContext对象
+          const videoContext = res.context;
+          // 这里可以对videoContext进行操作，例如播放视频
+          videoContext.play();
+        })
+        .exec();
     },
     drawBezier() {
       // Draw points
