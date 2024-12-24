@@ -1,31 +1,49 @@
 <template>
-    <view class="mapD">
-      <view class="content">
-        地图
+  <view>
+    <view class="page-body">
+      <view class="page-section page-section-gap">
+        <map
+          style="width: 100%; height: 300px"
+          :latitude="latitude"
+          :longitude="longitude"
+          :markers="covers">
+        </map>
       </view>
     </view>
-  </template>
+  </view>
+</template>
   
   <script>
-  export default {
-    data() {
-      return {
-      };
-    },
-    created() {},
-    mounted() {},
-    onReady() {},
-    onLoad(e) {},
-    onShow() {},
-    methods: {
-    },
-  };
-  </script>
-  <style scoped lang="scss">
-  .mapD {
-    .content {
-      padding: 32rpx;
-    }
-  }
-  </style>
+export default {
+  data() {
+    return {
+      id: 0, // 使用 marker点击事件 需要填写id
+      title: "map",
+      latitude: 39.909,
+      longitude: 116.39742,
+      covers: [
+        {
+          latitude: 39.909,
+          longitude: 116.39742,
+          iconPath: "@/static/mario.jpg",
+        },
+        {
+          latitude: 39.9,
+          longitude: 116.39,
+          iconPath: "@/static/setting.ico",
+        },
+      ],
+    };
+  },
+  created() {},
+  mounted() {},
+  onReady() {},
+  onLoad(e) {},
+  onShow() {},
+  methods: {},
+};
+</script>
+
+<style scoped lang="scss">
+</style>
   
