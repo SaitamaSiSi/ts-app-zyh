@@ -46,17 +46,6 @@
 	],
 	"subPackages": [
 		{
-			"root": "gamePackages",
-			"pages": [
-				{
-					"path": "pages/snake/index",
-					"style": {
-						"navigationBarTitleText": "贪吃蛇"
-					}
-				}
-			]
-		},
-		{
 			"root": "defaultPackages",
 			"pages": [
 				{
@@ -143,8 +132,7 @@
 		"pages/login/index": { 
 			"network": "all",
 			"packages": [
-				"defaultPackages",
-				"gamePackages"
+				"defaultPackages"
 			]
 		}
 	},
