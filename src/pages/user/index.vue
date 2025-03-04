@@ -34,7 +34,7 @@ export default {
           />
         </view>
       </view>
-      <uni-grid :column="3">
+      <uni-grid :column="3" v-if="false">
         <uni-grid-item>
           <view class="item" @click="go('/defaultPackages/pages/canvasD/index')">
             <uni-icons type="shop" :size="46" color="#a78845"></uni-icons>
