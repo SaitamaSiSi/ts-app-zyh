@@ -22,6 +22,8 @@ export default {
     ]);
     const priceIndex = ref(0);
     const priceOption = ref(["默认价格", "价格低序", "价格高序"]);
+    const gameIndex = ref(0);
+    const gameOption = ref(["请选择", "贪吃蛇"]);
     const productList = ref([]);
     const showLoading = ref(false);
 
@@ -126,6 +128,29 @@ export default {
         icon: "none",
       });
     }
+    
+    function gameChange(event) {
+      gameIndex.value = event.detail.value;
+      uni.showToast({
+        title: `选择${gameOption.value[gameIndex.value]}`,
+        icon: "none",
+      });
+    }
+
+    function handleGameStart() {
+      switch (gameIndex.value) {
+        case '1': {
+          uni.navigateTo({
+            url: '/gamePackages/pages/snake/index'
+          });
+          break;
+        }
+        default: {
+          uni.showToast({ title: '请先选择游戏', icon: 'none' });
+          break;
+        }
+      }
+    }
 
     function handleProductClick(product) {
       uni.showModal({
@@ -196,7 +221,9 @@ export default {
       productTypeIndex,
       productTypeOption,
       priceIndex,
+      gameIndex,
       priceOption,
+      gameOption,
       productList,
       showLoading,
       clickSwiper,
@@ -205,6 +232,8 @@ export default {
       storeTypeChange,
       productTypeChange,
       priceChange,
+      gameChange,
+      handleGameStart,
       handleProductClick,
       handleProductAdd,
       loadingMoreProduct,
@@ -214,7 +243,7 @@ export default {
 </script>
 
 <template>
-    <view class="container">
+    <view class="container" v-if="false">
     <view class="page-header">
       <CompSearch placeholder="肚条 火热售卖中" @handle-search="handleSearch" @handle-scan="handleScan" />
       <view class="uni-margin-wrap">
@@ -283,8 +312,62 @@ export default {
       </view>
     </view>
   </view>
+  <view class="game-container">
+    <!-- 游戏选择区域 -->
+    <view class="filter-section game-section">
+        <picker
+          class="game-picker"
+          @change="gameChange"
+          :value="gameIndex"
+          :range="gameOption"
+        >
+          <view class="uni-input">{{ gameOption[gameIndex] }}</view>
+        </picker>
+        <button class="game-button" @click="handleGameStart">进入游戏</button>
+    </view>
+  </view>
 </template>
 
 <style scoped lang="scss">
-@import url("./home.scss");
+.game-container {
+  padding: 20rpx;
+}
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+
+  .row-item {
+    flex: 1;
+    min-width: 200rpx;
+  }
+}
+
+.game-picker {
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 16rpx 24rpx;
+  font-size: 28rpx;
+}
+
+.game-button {
+  width: 100%;
+  background: #007AFF;
+  color: white;
+  border-radius: 8rpx;
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+  transition: all 0.3s;
+
+  &:active {
+    background: #0051ff;
+    transform: scale(0.98);
+  }
+}
 </style>
